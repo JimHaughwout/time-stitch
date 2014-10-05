@@ -41,6 +41,8 @@ timestamp = np.array([
 tree = KDTree(zip(timestamp, timestamp))
 
 print "Values are: %s" % timestamp
+# Add one arg dist*2 if desired
+# if index == len(ts) OR double_dist = float('inf') then no match
 double_dist, index = tree.query(np.array([lookup_value, lookup_value]), 1, 0, 1)
 # tree.query(lookup, 1, 0, 2, float(argv[3]))
 print "Closest is %f at distance %f" % (timestamp[index], double_dist/2.0)
