@@ -69,7 +69,7 @@ print "Values are: %s" % tarray
 seek_time = dt.datetime.now() + dt.timedelta(seconds=random.uniform(300,4000))
 print "Seeking: %s" % seek_time
 
-print tree2.query(np.array([seek_time, seek_time]))
+print tree2.query(np.array([seek_time, seek_time]), 1, 0, 1)
 
 '''
 double_dist, index = tree.query(np.array([lookup_value, lookup_value]), 1, 0, 1)
