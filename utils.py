@@ -4,20 +4,6 @@ import datetime
 import csv
 import dateutil.parser
 
-def excel_to_unix(s):
-    # 22590 * 86400
-    try:
-        return 86400 * float(s) - 2209161600.0  
-    except:
-        sys.exit("Could not convert %r to unix seconds." % s)
-
-
-def ts_convert(ts):
-    try:
-        return datetime.datetime.fromtimestamp(excel_to_unix(float(ts)))
-    except:
-        sys.exit("Could not convert %r to unix ts." % ts)
-
 
 def check_usage(arguments):
     '''
@@ -52,6 +38,14 @@ def check_usage(arguments):
         file_list.append(this_file)
 
     return ts_col_num, file_list
+
+
+def ts_diff_in_seconds(ts_1, ts_2):
+    '''
+    Returns the differential between two timestamps, in seconds.
+    Always returns a positive result (i.e., pure differential)
+    '''
+    return abs((ts_1 - ts_2).total_seconds())
 
 
 def build_ts_list(file_list, ts_column):
@@ -105,18 +99,3 @@ def find_ts_bands(ts_list):
             last_band_start = ts
         else:
             print ts, "Continuing Band"
-
-
-
-
-
-print "Starting..."
-ts_column, file_list = check_usage(sys.argv)
-print "Timestamps in column[%d], file list is %s." % (ts_column, file_list)
-ts_list = build_ts_list(file_list, ts_column)
-print "We have %d unique timestamps:" % len(ts_list)
-for ts in ts_list:
-    #x = dateutil.parser.parse(ts)
-    print ts
-find_ts_bands(ts_list)
-
